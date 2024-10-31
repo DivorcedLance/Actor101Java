@@ -1,31 +1,20 @@
 package com.mycompany.app;
 
-import akka.actor.ActorRef;
 import akka.actor.UntypedAbstractActor;
 
 public class Esclavo extends UntypedAbstractActor {
     
-    private ActorRef maestro;
-    
     @Override
-    public void postStop() throws Exception {
-        super.postStop(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
+    public void onReceive(Object message) throws InterruptedException {
+        // SI recibe un double subarreglo[] entonces sumar los elementos del subarreglo y enviar el resultado al maestro
 
-    @Override
-    public void preStart() throws Exception {
-        super.preStart(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-        System.out.println("Iniciando actor: " + this.getSelf().path());
-    }
-    
-    @Override
-    public void onReceive(Object message) {
-        if (message instanceof Integer) {
-            System.out.println("Procesando mensaje: " + (int)message);
-        }
-        
-        if (message instanceof ActorRef) {
-            maestro = (ActorRef) message;
+        if (message instanceof double[]) {
+            double[] subarreglo = (double[]) message;
+            double suma = 0;
+            for (int i = 0; i < subarreglo.length; i++) {
+                suma += subarreglo[i];
+            }
+            getSender().tell((long) suma, getSelf());            
         }
     }
 }
