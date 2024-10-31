@@ -7,6 +7,7 @@ package com.mycompany.app;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello Remote World!");
+        String a[] = {(Sumador.class.getName())};
+        akka.Main.main(a);
     }
 }
